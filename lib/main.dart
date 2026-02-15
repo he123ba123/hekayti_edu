@@ -30,7 +30,7 @@ class HekaytiEdu extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           navigatorKey: appNavigatorKey,
           onGenerateRoute: AppRouter().generateRoute,
-          initialRoute: Routes.welcomeView,
+          initialRoute: Routes.voiceRecordingView,
           themeMode: ThemeMode.dark,
         );
       },
