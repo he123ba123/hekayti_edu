@@ -1,19 +1,20 @@
 import 'package:dio/dio.dart';
-import '../../../../core/constants/api_constants.dart';
+import 'package:hekayti/features/quiz/data/arguments/quiz_argument.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/network/api_service.dart';
 import '../params/quiz_param.dart';
 
 class QuizRemoteDataSource {
-  final Dio dio;
+  final ApiService apiService;
 
-  QuizRemoteDataSource(this.dio);
+  QuizRemoteDataSource(this.apiService);
 
-  Future<QuizQuestion> getQuizQuestion(int lessonNumber) async {
+  Future<QuizQuestion> getQuizQuestion(QuizArgument arg) async {
     try {
-      final response = await dio.post(
-        ApiConstants.quizEndPoint,
-        data: {
-          "lesson_number": lessonNumber,
-        },
+      final response = await apiService.post(
+        ApiEndpoints.quiz,
+        data: arg.toJson(),
       );
 
       final quizResponse =
@@ -22,19 +23,11 @@ class QuizRemoteDataSource {
       return quizResponse.mcqs.first;
 
     } on DioException catch (e) {
-      throw Exception(
-        e.response?.data ?? "Failed to load quiz question",
-      );
+      final message =
+          e.response?.data?['message'] ?? e.message ?? "Unknown error";
+      throw ServerException(message: message);
+    } catch (e) {
+      throw ServerException(message: e.toString());
     }
   }
-}
-class DioClient {
-  static final Dio dio = Dio(
-    BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    ),
-  );
 }

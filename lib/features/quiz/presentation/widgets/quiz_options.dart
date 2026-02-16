@@ -8,7 +8,7 @@ class QuizOptionWidget extends StatelessWidget {
   final bool isSelected;
   final bool isCorrect;
   final bool showResult;
-  final VoidCallback onTap;
+  final VoidCallback? onTap; // nullable
 
   const QuizOptionWidget({
     super.key,
@@ -16,7 +16,7 @@ class QuizOptionWidget extends StatelessWidget {
     required this.isSelected,
     required this.isCorrect,
     required this.showResult,
-    required this.onTap,
+    this.onTap, // optional
   });
 
   @override
@@ -35,7 +35,7 @@ class QuizOptionWidget extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap, // just nullable, no !
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
         decoration: BoxDecoration(

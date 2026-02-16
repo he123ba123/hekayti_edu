@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hekayti/core/network/api_service.dart';
 import 'package:hekayti/features/home/logic/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:hekayti/core/routing/routes.dart';
@@ -52,25 +53,28 @@ class AppRouter {
         }
 
         return _buildRoute(
-          builder: (_) => MainScreen(
-            initialTab: initialTab,
-            initialLessonId: initialLessonId,
-          ),
+          builder: (_) =>
+              MainScreen(
+                initialTab: initialTab,
+                initialLessonId: initialLessonId,
+              ),
         );
       case Routes.voiceRecordingView:
         return _buildRoute(builder: (_) => const VoiceRecordingView());
       case Routes.aiFeedbackView:
         return _buildRoute(builder: (_) => const AiFeedbackView());
       case Routes.quizView:
-        final argument = arguments as QuizArgument;
         return _buildRoute(
-          builder: (_) => BlocProvider(
-            create: (context) =>
-                QuizCubit(QuizRemoteDataSource(DioClient.dio))
-                  ..loadQuestion(argument.lessonNumber),
-            child: QuizView(),
-          ),
-        );
+            builder: (_) =>
+                 BlocProvider(
+                  create: (context) {
+                    final apiService = ApiService();
+                    final remoteDataSource = QuizRemoteDataSource(apiService);
+                    return QuizCubit(remoteDataSource)..loadQuestion(1);
+                  },
+                   child: QuizView(),
+                ),
+                );
       case Routes.resultView:
         return _buildRoute(builder: (_) => const ResultView(score: .6));
       case Routes.socialStudiesScreen:

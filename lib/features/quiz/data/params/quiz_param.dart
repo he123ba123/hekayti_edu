@@ -42,11 +42,16 @@ class QuizQuestion {
 }
 
 class QuizOption {
-  final String key; // A / B / C / D
+  final String? key;
   final String text;
 
-  QuizOption({
-    required this.key,
-    required this.text,
-  });
+  QuizOption({required this.key, required this.text});
+
+  factory QuizOption.fromJson(Map<String, dynamic> json) {
+    return QuizOption(
+      key: json['key'] as String?, // nullable
+      text: json['text'] as String,
+    );
+  }
 }
+
