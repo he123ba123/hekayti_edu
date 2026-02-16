@@ -66,7 +66,10 @@ class _StoryScreenState extends State<StoryScreen> {
                           context.read<StoryCubit>().previousPart();
                         }
                       },
-                      child: StoryContentCard(text: state.currentPart),
+                      child: StoryContentCard(
+                        text: state.currentPart,
+                        imagePath: state.currentImagePath,
+                      ),
                     ),
                   ),
                 SizedBox(height: 30.h),

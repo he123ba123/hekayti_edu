@@ -25,6 +25,17 @@ class _ChildSetupScreenState extends State<ChildSetupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 90.h),
+        child: FloatingActionButton(
+          onPressed: () {
+          },
+          backgroundColor: AppColors.primaryColor,
+          elevation: 6,
+          tooltip: 'Chat with AI',
+          child: const Icon(Icons.forum_outlined, color: Colors.white),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -133,8 +144,7 @@ class _ChildSetupScreenState extends State<ChildSetupScreen> {
 
               // Footer
               TextButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Text(
                   "يمكنك تخطي هذه الخطوة وإضافة المحتوى لاحقاً",
                   style: TextStyleManager.font12Bold.copyWith(

@@ -4,7 +4,8 @@ import 'package:hekayti/core/text_style_manager/text_style_manager.dart';
 
 class StoryContentCard extends StatelessWidget {
   final String? text;
-  const StoryContentCard({super.key, this.text});
+  final String? imagePath;
+  const StoryContentCard({super.key, this.text, this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +25,25 @@ class StoryContentCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 24.h),
-          // Image Placeholder
+          // Image Container
           Container(
-            width: 280.w,
-            height: 180.h,
+            width: 380.w,
+            height: 280.h,
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
             decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(30.r),
             ),
-            child: Center(
-              child: Icon(
-                Icons.image_outlined,
-                size: 50.sp,
-                color: Colors.grey[300],
-              ),
-            ),
+            clipBehavior: Clip.antiAlias,
+            child: imagePath != null
+                ? Image.asset(imagePath!, fit: BoxFit.cover)
+                : Center(
+                    child: Icon(
+                      Icons.image_outlined,
+                      size: 50.sp,
+                      color: Colors.grey[300],
+                    ),
+                  ),
           ),
           SizedBox(height: 30.h),
           // Text Content
@@ -48,7 +53,7 @@ class StoryContentCard extends StatelessWidget {
               child: text != null
                   ? Text(
                       text!,
-                      style: TextStyleManager.font16Bold.copyWith(
+                      style: TextStyleManager.font20Bold.copyWith(
                         color: const Color(0xFF1A1F36),
                         height: 1.5,
                       ),
@@ -96,8 +101,6 @@ class StoryContentCard extends StatelessWidget {
                     ),
             ),
           ),
-
-          // const Spacer(), // Removed spacer since using Expanded/SingleScrollView
           SizedBox(height: 30.h),
         ],
       ),
