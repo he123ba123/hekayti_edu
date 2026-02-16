@@ -13,6 +13,8 @@ class StoryProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (totalSteps <= 0) return const SizedBox.shrink();
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40.w),
       child: Stack(
@@ -25,31 +27,41 @@ class StoryProgressBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(2.r),
             ),
           ),
+          // Progress Line Fill
+          Positioned(
+            left: 0,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Approximate progress - dots are spaced out evenly
+                final progress = totalSteps > 1
+                    ? currentStep / (totalSteps - 1)
+                    : 1.0;
+                return Container(
+                  width: (ScreenUtil().screenWidth - 80.w) * progress,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF90D5EC),
+                    borderRadius: BorderRadius.circular(2.r),
+                  ),
+                );
+              },
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(totalSteps, (index) {
-              if (index == 2) {
+              final bool isLast = index == totalSteps - 1;
+              if (isLast && totalSteps > 1) {
                 return Icon(
                   Icons.star_rounded,
-                  color: const Color(0xFF90D5EC),
-                  size: 36.sp,
+                  color: index <= currentStep
+                      ? const Color(0xFF90D5EC)
+                      : Colors.white,
+                  size: 32.sp,
                 );
               }
               return _buildProgressDot(index <= currentStep);
             }),
-          ),
-          // Progress Fill
-          Positioned(
-            left: 0,
-            right: 180
-                .w,
-            child: Container(
-              height: 4.h,
-              decoration: BoxDecoration(
-                color: const Color(0xFF90D5EC),
-                borderRadius: BorderRadius.circular(2.r),
-              ),
-            ),
           ),
         ],
       ),
@@ -63,10 +75,12 @@ class StoryProgressBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: isActive ? const Color(0xFF90D5EC) : Colors.white,
         shape: BoxShape.circle,
-        border: Border.all(
-          color: const Color(0xFF90D5EC).withOpacity(0.2),
-          width: 2,
-        ),
+        border: isActive
+            ? null
+            : Border.all(
+                color: const Color(0xFF90D5EC).withOpacity(0.2),
+                width: 2,
+              ),
       ),
     );
   }

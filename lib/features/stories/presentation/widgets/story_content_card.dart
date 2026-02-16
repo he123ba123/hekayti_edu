@@ -3,91 +3,103 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hekayti/core/text_style_manager/text_style_manager.dart';
 
 class StoryContentCard extends StatelessWidget {
-  const StoryContentCard({super.key});
+  final String? text;
+  const StoryContentCard({super.key, this.text});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 24.w),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(40.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 24.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(40.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 24.h),
+          // Image Placeholder
+          Container(
+            width: 280.w,
+            height: 180.h,
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(30.r),
             ),
-          ],
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: 24.h),
-            // Image Placeholder
-            Container(
-              width: 280.w,
-              height: 180.h,
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(30.r),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.image_outlined,
-                  size: 50.sp,
-                  color: Colors.grey[300],
-                ),
+            child: Center(
+              child: Icon(
+                Icons.image_outlined,
+                size: 50.sp,
+                color: Colors.grey[300],
               ),
             ),
-            SizedBox(height: 30.h),
-            // Text Content
-            Padding(
+          ),
+          SizedBox(height: 30.h),
+          // Text Content
+          Expanded(
+            child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: 4.w,
-                    runSpacing: 8.h,
-                    children: [
-                      _buildTextPart("بينما"),
-                      _buildTextPart("كان"),
-                      _buildHighlightedText(
-                        "يوسف",
-                        color: const Color(0xFF90D5EC),
+              child: text != null
+                  ? Text(
+                      text!,
+                      style: TextStyleManager.font16Bold.copyWith(
+                        color: const Color(0xFF1A1F36),
+                        height: 1.5,
                       ),
-                      _buildTextPart("يمشي"),
-                      _buildTextPart("في"),
-                      _buildHighlightedText("الغابة", isBoxed: true),
-                    ],
-                  ),
-                  SizedBox(height: 12.h),
-                  Text("الكثيفة، وجد", style: TextStyleManager.font16Bold),
-                  SizedBox(height: 12.h),
-                  _buildHighlightedText("عصفوراً", isBoxed: true),
-                  SizedBox(height: 12.h),
-                  Text(
-                    "صغيراً ملوناً يحاول الطيران.",
-                    style: TextStyleManager.font16Bold,
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    "قال يوسف: لا تقلق أيها العصفور، سأساعدك لتجد عشك.",
-                    style: TextStyleManager.font14Medium.copyWith(
-                      color: Colors.grey[400],
+                      textAlign: TextAlign.center,
+                    )
+                  : Column(
+                      children: [
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 4.w,
+                          runSpacing: 8.h,
+                          children: [
+                            _buildTextPart("بينما"),
+                            _buildTextPart("كان"),
+                            _buildHighlightedText(
+                              "يوسف",
+                              color: const Color(0xFF90D5EC),
+                            ),
+                            _buildTextPart("يمشي"),
+                            _buildTextPart("في"),
+                            _buildHighlightedText("الغابة", isBoxed: true),
+                          ],
+                        ),
+                        SizedBox(height: 12.h),
+                        Text(
+                          "الكثيفة، وجد",
+                          style: TextStyleManager.font16Bold,
+                        ),
+                        SizedBox(height: 12.h),
+                        _buildHighlightedText("عصفوراً", isBoxed: true),
+                        SizedBox(height: 12.h),
+                        Text(
+                          "صغيراً ملوناً يحاول الطيران.",
+                          style: TextStyleManager.font16Bold,
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          "قال يوسف: لا تقلق أيها العصفور، سأساعدك لتجد عشك.",
+                          style: TextStyleManager.font14Medium.copyWith(
+                            color: Colors.grey[400],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
             ),
-            const Spacer(),
+          ),
 
-            // Audio Wave Placeholder
-            SizedBox(height: 30.h),
-          ],
-        ),
+          // const Spacer(), // Removed spacer since using Expanded/SingleScrollView
+          SizedBox(height: 30.h),
+        ],
       ),
     );
   }

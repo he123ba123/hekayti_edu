@@ -9,14 +9,37 @@ import 'package:hekayti/features/lessons/presentation/screens/child_setup_screen
 import 'package:hekayti/features/settings/presentation/screens/settings_screen.dart';
 import 'package:hekayti/features/rewards/presentation/screens/rewards_screen.dart';
 
+import 'package:hekayti/core/network/api_service.dart';
+import 'package:hekayti/features/stories/data/data_sources/story_remote_data_source.dart';
+
+import 'package:hekayti/features/stories/data/repository/story_repository_impl.dart';
+
+import 'package:hekayti/features/stories/logic/story_cubit.dart';
+
 class MainScreen extends StatelessWidget {
   final NavigationTab? initialTab;
-  const MainScreen({super.key, this.initialTab});
+  final int? initialLessonId; // Add this
+
+  const MainScreen({super.key, this.initialTab, this.initialLessonId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NavigationCubit(initialTab ?? NavigationTab.home),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              NavigationCubit(initialTab ?? NavigationTab.home),
+        ),
+        BlocProvider(
+          create: (context) {
+            // Basic manual DI
+            final apiService = ApiService();
+            final remoteDataSource = StoryRemoteDataSourceImpl(apiService);
+            final repository = StoryRepositoryImpl(remoteDataSource);
+            return StoryCubit(repository);
+          },
+        ),
+      ],
       child: BlocBuilder<NavigationCubit, NavigationTab>(
         builder: (context, activeTab) {
           return Scaffold(
@@ -83,7 +106,7 @@ class MainScreen extends StatelessWidget {
       case NavigationTab.home:
         return const ChildSetupScreen();
       case NavigationTab.stories:
-        return const StoryScreen();
+        return StoryScreen(lessonId: initialLessonId);
       case NavigationTab.awards:
         return const RewardsScreen();
       case NavigationTab.settings:

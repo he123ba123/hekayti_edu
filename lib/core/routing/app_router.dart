@@ -4,12 +4,14 @@ import 'package:hekayti/features/home/logic/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:hekayti/core/routing/routes.dart';
 import 'package:hekayti/features/home/presentation/screens/main_screen.dart';
+import 'package:hekayti/features/home/presentation/screens/main_screen_args.dart';
 import 'package:hekayti/features/lessons/presentation/screens/child_setup_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/lesson_selection_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/upload_material_screen.dart';
 import 'package:hekayti/features/quiz/presentation/cubit/quiz_cubit.dart';
 import 'package:hekayti/features/splash/presentation/screens/splash_screen.dart';
 import 'package:hekayti/features/stories/presentation/screens/story_screen.dart';
+import 'package:hekayti/features/lessons/presentation/screens/social_studies_screen.dart';
 import '../../features/quiz/data/data_source/remote_data_source.dart';
 import '../../features/welcome/welcome_screen.dart';
 import 'package:hekayti/features/quiz/data/arguments/quiz_argument.dart';
@@ -37,8 +39,22 @@ class AppRouter {
       case Routes.storyScreen:
         return _buildRoute(builder: (_) => const StoryScreen());
       case Routes.mainScreen:
-        final initialTab = arguments is NavigationTab ? arguments : null;
-        return _buildRoute(builder: (_) => MainScreen(initialTab: initialTab));
+        NavigationTab? initialTab;
+        int? initialLessonId;
+
+        if (arguments is NavigationTab) {
+          initialTab = arguments;
+        } else if (arguments is MainScreenArgs) {
+          initialTab = arguments.initialTab;
+          initialLessonId = arguments.initialLessonId;
+        }
+
+        return _buildRoute(
+          builder: (_) => MainScreen(
+            initialTab: initialTab,
+            initialLessonId: initialLessonId,
+          ),
+        );
       case Routes.voiceRecordingView:
         return _buildRoute(builder: (_) => const VoiceRecordingView());
       case Routes.aiFeedbackView:
@@ -55,6 +71,8 @@ class AppRouter {
         );
       case Routes.resultView:
         return _buildRoute(builder: (_) => const ResultView(score: .6));
+      case Routes.socialStudiesScreen:
+        return _buildRoute(builder: (_) => const SocialStudiesScreen());
       default:
         return _buildRoute(
           builder: (_) =>
