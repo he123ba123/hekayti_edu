@@ -1,5 +1,5 @@
 class Routes {
-  static const String welcomeScren = '/';
+  static const String welcomeScreen = '/';
   static const String splashScreen = '/splash_screen';
   static const String childSetupScreen = '/child_setup_screen';
   static const String lessonSelectionScreen = '/lesson_selection_screen';
@@ -11,4 +11,6 @@ class Routes {
   static const String aiFeedbackView = 'aiFeedbackView';
   static const String quizView = 'quizView';
   static const String resultView = 'resultView';
+  static const String loginScreen = '/login_screen';
+  static const String signupScreen = '/signup_screen';
 }

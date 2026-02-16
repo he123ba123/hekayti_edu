@@ -13,6 +13,8 @@ import 'package:hekayti/features/quiz/presentation/cubit/quiz_cubit.dart';
 import 'package:hekayti/features/splash/presentation/screens/splash_screen.dart';
 import 'package:hekayti/features/stories/presentation/screens/story_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/social_studies_screen.dart';
+import 'package:hekayti/features/auth/presentation/screens/login_screen.dart';
+import 'package:hekayti/features/auth/presentation/screens/signup_screen.dart';
 import '../../features/quiz/data/data_source/remote_data_source.dart';
 import '../../features/welcome/welcome_screen.dart';
 import 'package:hekayti/features/quiz/data/arguments/quiz_argument.dart';
@@ -27,7 +29,7 @@ class AppRouter {
   Route generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
     switch (settings.name) {
-      case Routes.welcomeScren:
+      case Routes.welcomeScreen:
         return _buildRoute(builder: (_) => const WelcomeScreen());
       case Routes.splashScreen:
         return _buildRoute(builder: (_) => const SplashScreen());
@@ -77,13 +79,15 @@ class AppRouter {
         return _buildRoute(builder: (_) => const ResultView(score: .6));
       case Routes.socialStudiesScreen:
         return _buildRoute(builder: (_) => const SocialStudiesScreen());
+      case Routes.loginScreen:
+        return _buildRoute(builder: (_) => const LoginScreen());
+      case Routes.signupScreen:
+        return _buildRoute(builder: (_) => const SignupScreen());
       default:
         return _buildRoute(
-          builder: (_) =>
-              Scaffold(
-                body: Center(
-                    child: Text('No route defined for ${settings.name}')),
-              ),
+          builder: (_) => Scaffold(
+            body: Center(child: Text('No route defined for ${settings.name}')),
+          ),
         );
     }
   }
