@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hekayti/core/network/api_service.dart';
+import 'package:hekayti/features/auth/data/remote_data_source/auth_service.dart';
+import 'package:hekayti/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:hekayti/features/home/logic/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:hekayti/core/routing/routes.dart';
@@ -80,9 +82,23 @@ class AppRouter {
       case Routes.socialStudiesScreen:
         return _buildRoute(builder: (_) => const SocialStudiesScreen());
       case Routes.loginScreen:
-        return _buildRoute(builder: (_) => const LoginScreen());
+        return _buildRoute(builder: (_) =>  BlocProvider(
+           create: (context) {
+             final apiService = AuthService();
+             return AuthCubit(apiService);
+               },
+               child: LoginScreen(),
+              )
+        );
       case Routes.signupScreen:
-        return _buildRoute(builder: (_) => const SignupScreen());
+        return _buildRoute(builder: (_) => BlocProvider(
+          create: (context) {
+            final apiService = AuthService();
+            return AuthCubit(apiService);
+          },
+          child: SignupScreen(),
+        )
+        );
       default:
         return _buildRoute(
           builder: (_) => Scaffold(
