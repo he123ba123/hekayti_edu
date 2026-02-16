@@ -18,6 +18,13 @@ class StoryState {
   String? get currentPart =>
       storyParts.isNotEmpty ? storyParts[currentIndex] : null;
 
+  String get currentImagePath {
+    // We have 9 images: s1.png to s9.png
+    // Map index (0-8) to (s1-s9)
+    int imageIndex = (currentIndex % 9) + 1;
+    return "assets/images/s$imageIndex.png";
+  }
+
   factory StoryState.initial() {
     return const StoryState(status: StoryStatus.initial);
   }
