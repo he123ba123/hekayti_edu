@@ -168,7 +168,7 @@ class WelcomeScreen extends StatelessWidget {
                         height: 60.h,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, Routes.mainScreen);
+                            Navigator.pushNamed(context, Routes.signupScreen);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF90D5EC),
@@ -208,7 +208,7 @@ class WelcomeScreen extends StatelessWidget {
                       // Footer
                       GestureDetector(
                         onTap: () {
-                          // TODO: Handle Login
+                          Navigator.pushNamed(context, Routes.loginScreen);
                         },
                         child: RichText(
                           text: TextSpan(

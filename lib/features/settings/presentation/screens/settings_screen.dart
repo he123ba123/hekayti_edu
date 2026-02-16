@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hekayti/core/color_manager/app_colors.dart';
+import 'package:hekayti/core/routing/routes.dart';
 import 'package:hekayti/core/text_style_manager/text_style_manager.dart';
 import 'package:hekayti/features/settings/presentation/widgets/settings_tile.dart';
 
@@ -144,7 +145,13 @@ class SettingsScreen extends StatelessWidget {
 
               // Logout Button
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.loginScreen,
+                    (route) => false,
+                  );
+                },
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 16.h),

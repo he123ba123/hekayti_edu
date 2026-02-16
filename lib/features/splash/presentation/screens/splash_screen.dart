@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hekayti/core/color_manager/app_colors.dart';
 import 'package:hekayti/core/constants/app_assets.dart';
-import 'package:hekayti/features/welcome/welcome_screen.dart';
+import 'package:hekayti/core/routing/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,10 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-      );
+      Navigator.pushReplacementNamed(context, Routes.welcomeScreen);
     });
   }
 
