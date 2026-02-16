@@ -86,4 +86,47 @@ class TextStyleManager {
     color: AppColors.mainBlack,
     fontFamily: 'Inter',
   );
+
+  static TextStyle font12Regular = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
+
+  static TextStyle font12Medium = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
+
+  static TextStyle font12MediumItalic = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+    fontStyle: FontStyle.italic,
+  );
+
+  static TextStyle font32Bold = TextStyle(
+    fontSize: 32.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
+
+  static TextStyle font16SemiBold = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
+
+  static TextStyle font20SemiBold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
 }
