@@ -11,15 +11,20 @@ class QuizLoaded extends QuizState {
 
   QuizLoaded(this.question);
 }
-final class QuizAnswered extends QuizState {
-  final QuizQuestion question;
-  final bool isCorrect;
-
-  QuizAnswered({required this.question, required this.isCorrect});
-}
 final class QuizFailure extends QuizState {
   final String errorMessage;
 
   QuizFailure({required this.errorMessage});
 
+}
+class QuizAnswered extends QuizState {
+  final QuizQuestion question;
+  final bool isCorrect;
+  final String selectedKey;
+
+  QuizAnswered({
+    required this.question,
+    required this.isCorrect,
+    required this.selectedKey,
+  });
 }

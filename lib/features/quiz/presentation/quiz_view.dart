@@ -22,22 +22,10 @@ class QuizView extends StatelessWidget {
             if (state is QuizFailure) {
               return Center(child: Text(state.errorMessage));
             }
-            if (state is QuizLoaded) {
-              final question = state.question;
-              return QuizBody(
-                question: question,
-                showResult: false,
-              );
+            if (state is QuizLoaded || state is QuizAnswered) {
+              return const QuizBody();
             }
-            if (state is QuizAnswered) {
-              final question = state.question;
 
-              return QuizBody(
-                question: question,
-                showResult: true,
-                isCorrect: state.isCorrect,
-              );
-            }
             return const SizedBox();
           },
         ),
@@ -45,3 +33,4 @@ class QuizView extends StatelessWidget {
     );
   }
 }
+
