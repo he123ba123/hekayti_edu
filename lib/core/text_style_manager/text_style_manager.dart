@@ -115,4 +115,18 @@ class TextStyleManager {
     color: AppColors.mainBlack,
     fontFamily: 'Inter',
   );
+
+  static TextStyle font16SemiBold = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
+
+  static TextStyle font20SemiBold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mainBlack,
+    fontFamily: 'Inter',
+  );
 }

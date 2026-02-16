@@ -6,6 +6,8 @@ import 'package:hekayti/core/text_style_manager/text_style_manager.dart';
 import 'package:hekayti/features/home/logic/navigation_cubit.dart';
 import 'package:hekayti/features/stories/presentation/screens/story_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/child_setup_screen.dart';
+import 'package:hekayti/features/settings/presentation/screens/settings_screen.dart';
+import 'package:hekayti/features/rewards/presentation/screens/rewards_screen.dart';
 
 class MainScreen extends StatelessWidget {
   final NavigationTab? initialTab;
@@ -83,9 +85,9 @@ class MainScreen extends StatelessWidget {
       case NavigationTab.stories:
         return const StoryScreen();
       case NavigationTab.awards:
-        return _buildPlaceholder("جوائزي", const Color(0xFFFF4081));
+        return const RewardsScreen();
       case NavigationTab.settings:
-        return _buildPlaceholder("الإعدادات", const Color(0xFF7E57C2));
+        return const SettingsScreen();
     }
   }
 
