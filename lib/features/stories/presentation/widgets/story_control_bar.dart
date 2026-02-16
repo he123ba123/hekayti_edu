@@ -6,12 +6,14 @@ class StoryControlBar extends StatelessWidget {
   final VoidCallback onNext;
   final VoidCallback onExplain;
   final VoidCallback onSpeak;
+  final bool isLastPart;
 
   const StoryControlBar({
     super.key,
     required this.onNext,
     required this.onExplain,
     required this.onSpeak,
+    this.isLastPart = false,
   });
 
   @override
@@ -35,13 +37,15 @@ class StoryControlBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.arrow_back_ios_new,
+                      isLastPart
+                          ? Icons.check_rounded
+                          : Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      size: 18.sp,
+                      size: 20.sp,
                     ),
                     SizedBox(width: 12.w),
                     Text(
-                      "التالي",
+                      isLastPart ? "إنهاء" : "التالي",
                       style: TextStyleManager.font18SemiBold.copyWith(
                         color: Colors.white,
                       ),

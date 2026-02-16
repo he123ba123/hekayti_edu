@@ -121,13 +121,18 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
                             childAspectRatio: 1.1,
                             children: [
                               SubjectSelectionCard(
-                                title: "إنجليزي",
+                                title: "دراسات اجتماعية",
                                 icon: Icons.language,
                                 iconBackgroundColor: const Color(0xFFE6F0FF),
                                 iconColor: const Color(0xFF4A90E2),
                                 isSelected: _selectedSubjectIndex == 0,
-                                onTap: () =>
-                                    setState(() => _selectedSubjectIndex = 0),
+                                onTap: () {
+                                  setState(() => _selectedSubjectIndex = 0);
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.socialStudiesScreen,
+                                  );
+                                },
                               ),
                               SubjectSelectionCard(
                                 title: "رياضيات",
