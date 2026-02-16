@@ -8,16 +8,13 @@ import 'package:hekayti/features/lessons/presentation/screens/lesson_selection_s
 import 'package:hekayti/features/lessons/presentation/screens/upload_material_screen.dart';
 import 'package:hekayti/features/splash/presentation/screens/splash_screen.dart';
 import 'package:hekayti/features/stories/presentation/screens/story_screen.dart';
-
 import '../../features/welcome/welcome_screen.dart';
 import 'package:hekayti/features/quiz/data/arguments/quiz_argument.dart';
 import 'package:hekayti/features/quiz/presentation/quiz_view.dart';
 import 'package:hekayti/features/result/presentation/result_view.dart';
-
 import '../../features/ai_feedback/ai_feedback_view.dart';
 import '../../features/quiz/data/params/quiz_param.dart';
 import '../../features/voice_recording/voice_recording_view.dart';
-import '../../features/welcome/welocome_view.dart';
 import '../framework/navigation_animation.dart';
 
 class AppRouter {
@@ -39,18 +36,10 @@ class AppRouter {
       case Routes.mainScreen:
         final initialTab = arguments is NavigationTab ? arguments : null;
         return _buildRoute(builder: (_) => MainScreen(initialTab: initialTab));
-      case Routes.welcomeView:
-        return _buildRoute(
-            builder: (_) => const WelcomeView()
-        );
       case Routes.voiceRecordingView:
-        return _buildRoute(
-            builder: (_) => const VoiceRecordingView()
-        );
+        return _buildRoute(builder: (_) => const VoiceRecordingView());
       case Routes.aiFeedbackView:
-        return _buildRoute(
-            builder: (_) => const AiFeedbackView()
-        );
+        return _buildRoute(builder: (_) => const AiFeedbackView());
       case Routes.quizView:
         final question = QuizQuestion(
           id: 1,
@@ -66,18 +55,16 @@ class AppRouter {
         ;
 
         return _buildRoute(
-            builder: (_) =>  QuizView(quizArgument:
-            QuizArgument(
+          builder: (_) => QuizView(
+            quizArgument: QuizArgument(
               question: question,
               currentIndex: 2,
               totalQuestions: 5,
             ),
-            )
+          ),
         );
       case Routes.resultView:
-        return _buildRoute(
-            builder: (_) => const ResultView(score: .6,)
-        );
+        return _buildRoute(builder: (_) => const ResultView(score: .6));
       default:
         return _buildRoute(
           builder: (_) => Scaffold(

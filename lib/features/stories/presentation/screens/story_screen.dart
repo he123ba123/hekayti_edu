@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hekayti/core/routing/routes.dart';
 import 'package:hekayti/core/text_style_manager/text_style_manager.dart';
 import '../widgets/story_header.dart';
 import '../widgets/story_progress_bar.dart';
@@ -36,7 +37,7 @@ class StoryScreen extends StatelessWidget {
                 // TODO: Handle explain
               },
               onSpeak: () {
-                // TODO: Handle speak
+                Navigator.pushNamed(context, Routes.voiceRecordingView);
               },
             ),
             SizedBox(height: 10.h),
