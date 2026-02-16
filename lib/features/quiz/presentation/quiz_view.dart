@@ -1,83 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:hekayti/features/quiz/presentation/widgets/header.dart';
-import 'package:hekayti/features/quiz/presentation/widgets/question_card.dart';
-import 'package:hekayti/features/quiz/presentation/widgets/quiz_options.dart';
-import 'package:hekayti/features/quiz/presentation/widgets/result_card.dart';
-import '../data/arguments/quiz_argument.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hekayti/features/quiz/presentation/widgets/quiz_body.dart';
 
-class QuizView extends StatefulWidget {
-  final QuizArgument quizArgument;
-  const QuizView({
-    super.key,
-    required this.quizArgument
-  });
+import 'cubit/quiz_cubit.dart';
 
-  @override
-  State<QuizView> createState() => _QuizViewState();
-}
-
-class _QuizViewState extends State<QuizView> {
-  int? selectedOptionId;
-  bool showResult = false;
-
-  void selectOption(int optionId) {
-    if (showResult) return;
-
-    setState(() {
-      selectedOptionId = optionId;
-      showResult = true;
-    });
-  }
-
-  bool get isCorrect =>
-      selectedOptionId == widget.quizArgument.question.correctOptionId;
+class QuizView extends StatelessWidget {
+  const QuizView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final progress =
-        (widget.quizArgument.currentIndex + 1) / widget.quizArgument.totalQuestions;
-
     return Scaffold(
       backgroundColor: const Color(0xffF5F7F9),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-          
-                /// HEADER
-                Header(progress: progress),
+        child: BlocBuilder<QuizCubit, QuizState>(
+          builder: (context, state) {
+            if (state is QuizLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is QuizFailure) {
+              return Center(child: Text(state.errorMessage));
+            }
+            if (state is QuizLoaded) {
+              final question = state.question;
+              return QuizBody(
+                question: question,
+                showResult: false,
+              );
+            }
+            if (state is QuizAnswered) {
+              final question = state.question;
 
-                const SizedBox(height: 30),
-          
-                /// QUESTION CARD
-                QuestionCard(text:widget.quizArgument.question.question),
-                const SizedBox(height: 25),
-          
-                /// OPTIONS
-                ...widget.quizArgument.question.options.map(
-                      (option) => Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: QuizOptionWidget(
-                      option: option,
-                      isSelected: selectedOptionId == option.id,
-                      isCorrect:
-                      widget.quizArgument.question.correctOptionId == option.id,
-                      showResult: showResult,
-                      onTap: () => selectOption(option.id),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-          
-                if (showResult)
-                  ResultCard(isCorrect: isCorrect),
-          
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
+              return QuizBody(
+                question: question,
+                showResult: true,
+                isCorrect: state.isCorrect,
+              );
+            }
+            return const SizedBox();
+          },
         ),
       ),
     );
