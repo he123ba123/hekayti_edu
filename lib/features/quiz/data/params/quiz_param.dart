@@ -1,62 +1,52 @@
-class QuizQuestion {
-  final int id;
-  final String question;
-  final List<QuizOption> options;
-  final int correctOptionId;
+class QuizResponse {
+  final List<QuizQuestion> mcqs;
 
-  QuizQuestion({
-    required this.id,
-    required this.question,
-    required this.options,
-    required this.correctOptionId,
-  });
+  QuizResponse({required this.mcqs});
 
-  factory QuizQuestion.fromJson(Map<String, dynamic> json) {
-    return QuizQuestion(
-      id: json['id'],
-      question: json['question'],
-      correctOptionId: json['correct_option_id'],
-      options: (json['options'] as List)
-          .map((e) => QuizOption.fromJson(e))
+  factory QuizResponse.fromJson(Map<String, dynamic> json) {
+    return QuizResponse(
+      mcqs: (json['mcqs'] as List)
+          .map((e) => QuizQuestion.fromJson(e))
           .toList(),
     );
   }
 }
-class QuestionModel {
-  final String id;
-  final String title;
-  final List<AnswerModel> answers;
-  final String correctAnswerId;
 
-  QuestionModel({
-    required this.id,
-    required this.title,
-    required this.answers,
-    required this.correctAnswerId,
-  });
-}
-class QuizOption {
-  final int id;
-  final String text;
+class QuizQuestion {
+  final String question;
+  final List<QuizOption> options;
+  final String correctAnswer;
 
-  QuizOption({
-    required this.id,
-    required this.text,
+  QuizQuestion({
+    required this.question,
+    required this.options,
+    required this.correctAnswer,
   });
 
-  factory QuizOption.fromJson(Map<String, dynamic> json) {
-    return QuizOption(
-      id: json['id'],
-      text: json['text'],
+  factory QuizQuestion.fromJson(Map<String, dynamic> json) {
+    final optionsMap = Map<String, dynamic>.from(json['options']);
+
+    return QuizQuestion(
+      question: json['question'],
+      correctAnswer: json['answer'],
+      options: optionsMap.entries
+          .map(
+            (entry) => QuizOption(
+          key: entry.key,
+          text: entry.value,
+        ),
+      )
+          .toList(),
     );
   }
 }
-class AnswerModel {
-  final String id;
+
+class QuizOption {
+  final String key; // A / B / C / D
   final String text;
 
-  AnswerModel({
-    required this.id,
+  QuizOption({
+    required this.key,
     required this.text,
   });
 }

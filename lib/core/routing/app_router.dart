@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hekayti/features/home/logic/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:hekayti/core/routing/routes.dart';
@@ -6,8 +7,10 @@ import 'package:hekayti/features/home/presentation/screens/main_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/child_setup_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/lesson_selection_screen.dart';
 import 'package:hekayti/features/lessons/presentation/screens/upload_material_screen.dart';
+import 'package:hekayti/features/quiz/presentation/cubit/quiz_cubit.dart';
 import 'package:hekayti/features/splash/presentation/screens/splash_screen.dart';
 import 'package:hekayti/features/stories/presentation/screens/story_screen.dart';
+import '../../features/quiz/data/data_source/remote_data_source.dart';
 import '../../features/welcome/welcome_screen.dart';
 import 'package:hekayti/features/quiz/data/arguments/quiz_argument.dart';
 import 'package:hekayti/features/quiz/presentation/quiz_view.dart';
@@ -41,35 +44,24 @@ class AppRouter {
       case Routes.aiFeedbackView:
         return _buildRoute(builder: (_) => const AiFeedbackView());
       case Routes.quizView:
-        final question = QuizQuestion(
-          id: 1,
-          question: 'ماذا وجد البطل "زيد" في أعماق الغابة المسحورة؟',
-          correctOptionId: 2,
-          options: [
-            QuizOption(id: 1, text: "خريطة قديمة للكنز"),
-            QuizOption(id: 2, text: "طائر ملون يتحدث"),
-            QuizOption(id: 3, text: "صندوقًا مليئًا بالذهب"),
-            QuizOption(id: 4, text: "مفتاحًا ذهبيًا سحريًا"),
-          ],
-        );
-        ;
-
+        final argument = arguments as QuizArgument;
         return _buildRoute(
-          builder: (_) => QuizView(
-            quizArgument: QuizArgument(
-              question: question,
-              currentIndex: 2,
-              totalQuestions: 5,
-            ),
+          builder: (_) => BlocProvider(
+            create: (context) => QuizCubit(
+              QuizRemoteDataSource(DioClient.dio),
+            )..loadQuestion(argument.lessonNumber),
+            child: QuizView(),
           ),
         );
       case Routes.resultView:
         return _buildRoute(builder: (_) => const ResultView(score: .6));
       default:
         return _buildRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
-          ),
+          builder: (_) =>
+              Scaffold(
+                body: Center(
+                    child: Text('No route defined for ${settings.name}')),
+              ),
         );
     }
   }
